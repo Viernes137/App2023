@@ -2,7 +2,7 @@
     <string name="app_name">Sextoto</string>
     <string name="usuario_label">Usuario</string>
     <string name="password_label">Contraseña</string>
-    <string name="olvcontraseña">Olvidé mi contraseña</string>
+    <string name="olvcontraseña">Parece ser que olvidaste tu contraseña...</string>
     <string name="login">Iniciar</string>
     <string name="registro">Registrarse</string>
     <string name="email">email</string>
@@ -30,5 +30,6 @@
     <string name="regresar">Regresar</string>
     <string name="Card1">Bar registrado</string>
     <string name="otro">Otro</string>
+    <string name="tm">Bares guardados</string>
 
 </resources>

@@ -119,15 +119,13 @@ import java.util.List;
                                 "        </style>\n" +
                                 "    </head>\n" +
                                 "    <body>\n" +
-                                "        <div id=\"top-pattern\"></div>\n" +
                                 "        <div id=\"wrapper\">\n" +
                                 "\t\t\t<h2>Recupere su contraseña</h2>\n" +
-                                "            <h2>Su contraseña antigua era " +
-                                contra +
-                                "ahora es " +
+                                "            <h2>Contraseña anterior: " +
+                                contra +"\n"+
+                                "Nueva: " +
                                 nueva +
                                 "</h2>\n" +
-                                "            <p><img src=\"https://sendy.colorlib.com/img/email-notifications/subscribed.gif\" height=\"150\"></p>\n" +
                                 "\t\t</div>\n" +
                                 "    </body>\n" +
                                 "</html>";

@@ -97,7 +97,7 @@
                 android:layout_marginEnd="40dp"
                 android:backgroundTint="@color/verde"
                 android:elevation="6dp"
-                android:text="@string/olvcontraseña"
+                android:text="Olvide mi contraseña"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
