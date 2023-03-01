@@ -84,7 +84,7 @@ public class menu extends AppCompatActivity {
                 pos=i;
                 button.setEnabled(true);
                 button1.setEnabled(true);
-                Toast.makeText(getApplicationContext(), "Para guardar los cambios de click en guardar cambios", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Para guardar los cambios de click en guardar cambios", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -123,7 +123,7 @@ public class menu extends AppCompatActivity {
                         listView.setAdapter(myAdapter);
                         editText.setText("");
                         editText1.setText("");
-                        Toast.makeText(getApplicationContext(), "Se modificó la contraseña", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Se modificó la contraseña", Toast.LENGTH_LONG).show();
                         button.setEnabled(false);
                         button1.setEnabled(false);
                     }else{
@@ -154,7 +154,7 @@ public class menu extends AppCompatActivity {
                         editText.setText("");
                         editText1.setText("");
                         Toast.makeText(getApplicationContext(), myData.getUsuario()+" "+myData.getContra(), Toast.LENGTH_LONG).show();
-                        Toast.makeText(menu.this, "REGISTRO GURADADO",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(menu.this, "REGISTRO GURADADO",Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(menu.this, "ERROR AL GUARDAR REGISTRO",Toast.LENGTH_LONG).show();
                     }
@@ -195,23 +195,24 @@ public class menu extends AppCompatActivity {
                     editText.setText("");
                     editText1.setText("");
                     Toast.makeText(getApplicationContext(), myData.getUsuario()+" "+myData.getContra(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(menu.this, "REGISTRO GURADADO",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(menu.this, "REGISTRO GURADADO",Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(menu.this, "ERROR AL GUARDAR REGISTRO",Toast.LENGTH_LONG).show();
                 }
             }
         }
-        if(id==R.id.item2){
-            Toast.makeText(getApplicationContext(), "Ver API", Toast.LENGTH_LONG).show();
-            Intent intent= new Intent(menu.this,MyMap.class);
-            startActivity(intent);
-            //List2Json(myInfo,list);
-            return true;
-        }
         if(id==R.id.item3){
             Intent intent= new Intent(menu.this,activity_login.class);
             startActivity(intent);
             return true;
+        }
+        if(id==R.id.nuevo){
+            //Toast.makeText(getApplicationContext(), "Ver API2", Toast.LENGTH_LONG).show();
+            Intent intent= new Intent(menu.this,apii.class);
+            startActivity(intent);
+            return true;
+        }else{
+            Toast.makeText(getApplicationContext(), "muuuu", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
