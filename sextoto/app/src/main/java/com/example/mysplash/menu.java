@@ -1,9 +1,18 @@
 package com.example.mysplash;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,7 +31,7 @@ import com.example.mysplash.json.MyInfo;
 
 import java.util.List;
 
-public class menu extends AppCompatActivity {
+public class menu extends AppCompatActivity   implements LocationListener {
     public MyDesUtil myDesUtil= new MyDesUtil().addStringKeyBase64(Registro.KEY);
     public static String TAG = "mensaje";
     public static String json = null;
@@ -34,13 +44,26 @@ public class menu extends AppCompatActivity {
     public static MyInfo myInfo= null;
     EditText editText,editText1;
     Button button,button1,button2;
+    ImageView imageView;
     infos data = new infos();
+
+    int REQUEST_CODE = 200;
+    public static Double latitud;
+    public static Double longitud;
+    private LocationManager locationManager;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Object object= null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         Intent intent = getIntent();
+        startGps();
+        verificarPermisos();
+
+
         if(intent != null){
             if(intent.getExtras() !=null){
                 object = intent.getExtras().get("Objeto");
@@ -58,17 +81,15 @@ public class menu extends AppCompatActivity {
         button1=findViewById(R.id.buttonM);
         button2=findViewById(R.id.buttonA);
         listView = (ListView) findViewById(R.id.listViewId);
-
+        Button ubi = findViewById(R.id.buttonM4);
 
         DbContras dbContras = new DbContras(menu.this);
         listo = dbContras.getContras(myInfo.getId_usr());
-        /*for(MyData contra : listo){
-            Log.d("Contras",contra.toString());
-        }*/
         MyAdapter myAdapter = new MyAdapter(listo, getBaseContext());
         listView.setAdapter(myAdapter);
         button.setEnabled(false);
         button1.setEnabled(false);
+        ubi.setEnabled(false);
         if(listo==null){
             Toast.makeText(getApplicationContext(), "Para agregar una contraseña de clic en el menú o en el boton +", Toast.LENGTH_LONG).show();
             Toast.makeText(getApplicationContext(), "Escriba en los campos", Toast.LENGTH_LONG).show();
@@ -84,6 +105,7 @@ public class menu extends AppCompatActivity {
                 pos=i;
                 button.setEnabled(true);
                 button1.setEnabled(true);
+                ubi.setEnabled(true);
                 //Toast.makeText(getApplicationContext(), "Para guardar los cambios de click en guardar cambios", Toast.LENGTH_LONG).show();
             }
         });
@@ -102,6 +124,7 @@ public class menu extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Se eliminó la contraseña", Toast.LENGTH_LONG).show();
                     button.setEnabled(false);
                     button1.setEnabled(false);
+                    ubi.setEnabled(false);
                 }else{
                     Toast.makeText(getApplicationContext(), "Error al eliminar", Toast.LENGTH_LONG).show();
                 }
@@ -126,6 +149,7 @@ public class menu extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(), "Se modificó la contraseña", Toast.LENGTH_LONG).show();
                         button.setEnabled(false);
                         button1.setEnabled(false);
+                        ubi.setEnabled(false);
                     }else{
                         Toast.makeText(getApplicationContext(), "Error al modificar", Toast.LENGTH_LONG).show();
                     }
@@ -137,6 +161,25 @@ public class menu extends AppCompatActivity {
             public void onClick(View view) {
                 String usr= String.valueOf(editText.getText());
                 String contra = String.valueOf(editText1.getText());
+                Button tomarfoto = findViewById(R.id.buttonM2);
+                Button subirfoto = findViewById(R.id.buttonM3);
+
+                imageView = findViewById(R.id.foto);
+
+                tomarfoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                });
+
+                subirfoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
                 if(usr.equals("")||contra.equals("")){
                     Toast.makeText(getApplicationContext(), "Llena los campos", Toast.LENGTH_LONG).show();
                 }else{
@@ -161,6 +204,85 @@ public class menu extends AppCompatActivity {
                 }
             }
         });
+
+        private void startGps() {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},3);
+                return;
+            }
+            if( locationManager == null )
+            {
+                locationManager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, (float) 0, (LocationListener) this);
+            }
+        }
+        @Override
+        public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults )
+        {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            switch (requestCode)
+            {
+                case 3:
+                    if( android.Manifest.permission.ACCESS_FINE_LOCATION.equals( permissions[ 0 ]) && grantResults[ 0 ] == 0 )
+                    {
+                        startGps();
+                        return;
+                    }
+                    break;
+            }
+        }
+        private void stopGps( )
+        {
+            locationManager.removeUpdates((LocationListener) this);
+            locationManager = null;
+        }
+        @Override
+        public void onProviderEnabled(@NonNull String provider)
+        {
+        }
+
+        @Override
+        public void onProviderDisabled(@NonNull String provider)
+        {
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras)
+        {
+        }
+
+
+        ubi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(menu.this, GoMap.class);
+                startActivity(intent);
+            }
+        });
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        private void verificarPermisos(){
+            int permisoUbi = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            int permisoUbi2 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            int permisoCamara = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+
+            if ( permisoUbi == PackageManager.PERMISSION_GRANTED ){
+                Toast.makeText(this, "Permiso Ubi ", Toast.LENGTH_SHORT).show();
+            } else{
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
+            }
+            if ( permisoUbi2 == PackageManager.PERMISSION_GRANTED ){
+                Toast.makeText(this, "Permiso Ubi ", Toast.LENGTH_SHORT).show();
+            } else{
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},REQUEST_CODE);
+            }
+            if ( permisoCamara == PackageManager.PERMISSION_GRANTED ){
+                Toast.makeText(this, "Permiso Camara ", Toast.LENGTH_SHORT).show();
+            } else{
+                requestPermissions(new String[]{Manifest.permission.CAMERA},REQUEST_CODE);
+            }
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

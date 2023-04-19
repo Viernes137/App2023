@@ -8,6 +8,8 @@ public class infos implements Serializable {
     private String contra;
     private String usuario;
 
+    private double longitud;
+    private double latitud;
 
     public int getId_contra() {
         return id_contra;
@@ -43,6 +45,19 @@ public class infos implements Serializable {
 
     private int id_usr;
 
+    public double getLongitud() {
+        return longitud;
+    }
 
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
 
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
 }

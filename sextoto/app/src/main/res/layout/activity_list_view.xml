@@ -61,6 +61,12 @@
                         android:textAlignment="center"></TextView>
 
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:srcCompat="@tools:sample/avatars" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

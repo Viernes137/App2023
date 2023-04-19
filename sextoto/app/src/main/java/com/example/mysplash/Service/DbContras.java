@@ -64,7 +64,9 @@ public class DbContras extends UsuariosDBService{
             myData.setId_contra(cursor.getInt(0));
             myData.setContra(cursor.getString(1));
             myData.setUsuario(cursor.getString(2));
-            myData.setId_usr(cursor.getInt(3));
+            myData.setLongitud(cursor.getDouble(3));
+            myData.setLatitud(cursor.getDouble(4));
+            myData.setId_usr(cursor.getInt(5));
             contras.add(myData);
             cursor.moveToNext( );
         }

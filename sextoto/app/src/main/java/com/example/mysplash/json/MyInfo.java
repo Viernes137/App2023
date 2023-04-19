@@ -21,6 +21,11 @@ public class MyInfo implements Serializable {
     private int activado;
     private String nombre;
 
+    private double longitud;
+
+    private double latitud;
+
+
     public int getId_usr() {
         return id_usr;
     }
@@ -138,4 +143,19 @@ public class MyInfo implements Serializable {
         this.cel = cel;
     }
 
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
 }

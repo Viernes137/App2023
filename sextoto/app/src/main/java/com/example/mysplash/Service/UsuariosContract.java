@@ -34,6 +34,8 @@ public class UsuariosContract implements Serializable {
                     "reg TEXT," +
                     "notif INTEGER," +
                     "nombre TEXT" +
+                    "long DOUBLE,"+
+                    "lat DOUBLE,"+
                     ")";
             return table;
         }
@@ -53,6 +55,8 @@ public class UsuariosContract implements Serializable {
             values.put("reg", info.getRegion());
             values.put("notif", info.getActivado());
             values.put("nombre", info.getNombre());
+            values.put("long", info.getLongitud());
+            values.put("lat", info.getLatitud());
             return values;
         }
     }

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Metodos {
-    public static final String TAG = "Saul";
+    public static final String TAG = "bruno";
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
     //Metodos Sha1
     public static byte[] createSha1( String text )
